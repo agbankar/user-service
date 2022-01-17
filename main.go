@@ -1,13 +1,13 @@
 package main
 
 import (
-	"gotest/dao"
-	"gotest/model"
-	"gotest/service"
+	"fmt"
+	"mocking-goway/dao"
+	"mocking-goway/model"
+	"mocking-goway/service"
 )
 
 func main() {
-
 	userDao := dao.NewUserDao()
 	userService := service.NewUserService(userDao)
 
@@ -15,5 +15,6 @@ func main() {
 		Name: "Ashish",
 		Id:   0,
 	}
-	userService.RegisterUser(&user)
+	bonus, _ := userService.CalculateBonus(&user)
+	fmt.Println(bonus)
 }

@@ -2,11 +2,11 @@ package dao
 
 import (
 	"fmt"
-	"gotest/model"
+	"mocking-goway/model"
 )
 
 type UserDao interface {
-	InsertUser(User *model.User)
+	GetRating(User *model.User) (string, error)
 }
 type UserDaoImpl struct {
 }
@@ -15,6 +15,7 @@ func NewUserDao() UserDao {
 	return &UserDaoImpl{}
 
 }
-func (U *UserDaoImpl) InsertUser(User *model.User) {
+func (U *UserDaoImpl) GetRating(User *model.User) (string, error) {
 	fmt.Println("Inside Dao", User)
+	return "A", nil
 }

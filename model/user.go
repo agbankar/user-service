@@ -1,6 +1,7 @@
 package model
 
 type User struct {
-	Name string
-	Id   int
+	Name       string
+	Id         int
+	Department string
 }
