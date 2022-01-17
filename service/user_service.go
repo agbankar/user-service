@@ -1,7 +1,7 @@
 package service
 
 import (
-	"fmt"
+	"errors"
 	"mocking-goway/dao"
 	"mocking-goway/model"
 )
@@ -17,10 +17,9 @@ func NewUserService(dao dao.UserDao) UserService {
 	return &UserServiceImpl{UserDao: dao}
 }
 func (service *UserServiceImpl) CalculateBonus(u *model.User) (float32, error) {
-	fmt.Println("Inside service  ", u)
 	rating, err := service.UserDao.GetRating(u)
 	if err != nil {
-		return -1, err
+		return -1, errors.New("Not able to fetch the data from DB")
 	}
 	if rating == "A" {
 		return 100, nil
@@ -32,7 +31,7 @@ func (service *UserServiceImpl) CalculateBonus(u *model.User) (float32, error) {
 		return 50, nil
 	}
 	if rating == "D" {
-		return 00, nil
+		return 0, nil
 	}
-	return 33.00, nil
+	return -1, errors.New("Not able to fetch the data from DB")
 }
