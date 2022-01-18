@@ -2,7 +2,7 @@ package dao
 
 import (
 	"fmt"
-	"mocking-goway/model"
+	"mocking-goway/internal/model"
 )
 
 type UserDao interface {

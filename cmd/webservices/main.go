@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"mocking-goway/dao"
-	"mocking-goway/model"
-	"mocking-goway/service"
+	"mocking-goway/internal/appserver"
+	"mocking-goway/internal/config"
+	"mocking-goway/internal/model"
+	"mocking-goway/internal/service"
 )
 
 func main() {
@@ -17,4 +19,7 @@ func main() {
 	}
 	bonus, _ := userService.CalculateBonus(&user)
 	fmt.Println(bonus)
+	c := &config.Config{Port: "8080"}
+	server := appserver.NewAppServer(c)
+	server.StartServer()
 }

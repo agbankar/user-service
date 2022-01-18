@@ -3,7 +3,7 @@ package service
 import (
 	"errors"
 	"gopkg.in/go-playground/assert.v1"
-	"mocking-goway/model"
+	"mocking-goway/internal/model"
 	"testing"
 )
 
