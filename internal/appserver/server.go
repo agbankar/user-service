@@ -18,16 +18,18 @@ func NewAppServer(config *config.Config) *AppServer {
 		router: mux.NewRouter(),
 	}
 }
-func (a *AppServer) StartServer() {
+func (a *AppServer) StartServer(ch chan bool) {
+
 	a.router.HandleFunc("/getData", GetData).Methods("GET")
 	a.server = &http.Server{
 		Addr:    a.config.Port,
 		Handler: a.router}
-	a.router.Handle("/", a.router)
 	a.server.ListenAndServe()
+	ch <- true
 
 }
 
 func GetData(writer http.ResponseWriter, request *http.Request) {
+	writer.WriteHeader(http.StatusOK)
 
 }

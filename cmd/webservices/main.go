@@ -7,9 +7,11 @@ import (
 	"mocking-goway/internal/config"
 	"mocking-goway/internal/model"
 	"mocking-goway/internal/service"
+	"net/http"
 )
 
 func main() {
+
 	userDao := dao.NewUserDao()
 	userService := service.NewUserService(userDao)
 
@@ -17,9 +19,17 @@ func main() {
 		Name: "Ashish",
 		Id:   0,
 	}
+	ch := make(chan bool)
 	bonus, _ := userService.CalculateBonus(&user)
 	fmt.Println(bonus)
 	c := &config.Config{Port: "8080"}
 	server := appserver.NewAppServer(c)
-	server.StartServer()
+	go server.StartServer(ch)
+	<-ch
+
+}
+
+func GetData(writer http.ResponseWriter, request *http.Request) {
+	writer.WriteHeader(http.StatusOK)
+
 }
