@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"fmt"
+	"encoding/json"
 	"github.com/gorilla/mux"
 	"net/http"
+	"user-service/internal/model"
 	"user-service/internal/service"
 )
 
@@ -17,10 +18,15 @@ func NewUserController(UserService service.UserService) *UserController {
 	}
 }
 
-func (UserController *UserController) GetBonus(writer http.ResponseWriter, r *http.Request) {
+func (u *UserController) GetBonus(w http.ResponseWriter, r *http.Request) {
 	userId := mux.Vars(r)["userId"]
-	fmt.Println(userId)
-	writer.Write([]byte("ok"))
-	writer.WriteHeader(http.StatusOK)
+	bonus, _ := u.UserService.CalculateBonus(userId)
+	userBonus := model.UserBonus{
+		UserID: userId,
+		Bonus:  bonus,
+	}
+
+	json.NewEncoder(w).Encode(userBonus)
+	w.WriteHeader(http.StatusOK)
 
 }

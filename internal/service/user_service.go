@@ -7,7 +7,8 @@ import (
 )
 
 type UserService interface {
-	CalculateBonus(u *model.User) (float32, error)
+	CalculateBonus(string) (float32, error)
+	CreateUser(*model.User) error
 }
 type UserServiceImpl struct {
 	UserDao dao.UserDao
@@ -16,8 +17,8 @@ type UserServiceImpl struct {
 func NewUserService(dao dao.UserDao) UserService {
 	return &UserServiceImpl{UserDao: dao}
 }
-func (service *UserServiceImpl) CalculateBonus(u *model.User) (float32, error) {
-	rating, err := service.UserDao.GetRating(u)
+func (s *UserServiceImpl) CalculateBonus(UserId string) (float32, error) {
+	rating, err := s.UserDao.GetRating(UserId)
 	if err != nil {
 		return -1, errors.New("Not able to fetch the data from DB")
 	}
@@ -34,4 +35,10 @@ func (service *UserServiceImpl) CalculateBonus(u *model.User) (float32, error) {
 		return 0, nil
 	}
 	return -1, errors.New("Not able to fetch the data from DB")
+}
+
+// CreateUser TODO: Not implemented
+func (s *UserServiceImpl) CreateUser(user *model.User) error {
+	return nil
+
 }

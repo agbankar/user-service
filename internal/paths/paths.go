@@ -1,3 +1,5 @@
 package paths
 
-var GetBonus = "/getBonus/{userId}"
+const PREFIX = "/"
+
+var GetBonus = PREFIX + "getBonus/{userId}"
