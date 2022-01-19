@@ -2,34 +2,33 @@ package main
 
 import (
 	"fmt"
-	"mocking-goway/dao"
 	"mocking-goway/internal/appserver"
 	"mocking-goway/internal/config"
-	"mocking-goway/internal/model"
-	"mocking-goway/internal/service"
-	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
+	/*
+		sigs := make(chan os.Signal, 1)
+		signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
-	userDao := dao.NewUserDao()
-	userService := service.NewUserService(userDao)
+		c := &config.Config{Port: "8080"}
+		server := appserver.NewAppServer(c)
+		server.Start()
 
-	user := model.User{
-		Name: "Ashish",
-		Id:   0,
-	}
-	ch := make(chan bool)
-	bonus, _ := userService.CalculateBonus(&user)
-	fmt.Println(bonus)
-	c := &config.Config{Port: "8080"}
+		<-sigs
+		fmt.Println("Done")
+
+	*/
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	c := &config.Config{Port: ":8080"}
 	server := appserver.NewAppServer(c)
-	go server.StartServer(ch)
-	<-ch
+	go server.Start()
 
-}
-
-func GetData(writer http.ResponseWriter, request *http.Request) {
-	writer.WriteHeader(http.StatusOK)
-
+	//go appserver.Start()
+	<-sigs
+	fmt.Println("Done")
 }

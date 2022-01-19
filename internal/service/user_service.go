@@ -2,7 +2,7 @@ package service
 
 import (
 	"errors"
-	"mocking-goway/dao"
+	"mocking-goway/internal/dao"
 	"mocking-goway/internal/model"
 )
 
