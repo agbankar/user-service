@@ -3,8 +3,8 @@ package controllers
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"mocking-goway/internal/service"
 	"net/http"
+	"user-service/internal/service"
 )
 
 type UserController struct {

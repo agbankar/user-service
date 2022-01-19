@@ -4,9 +4,8 @@ import (
 	"context"
 	"github.com/gorilla/mux"
 	"log"
-	"mocking-goway/internal/config"
 	"net/http"
-	"time"
+	"user-service/internal/config"
 )
 
 type Server interface {
@@ -40,8 +39,6 @@ func (a *AppServer) AddGetApi(Path string, HandledFunc func(w http.ResponseWrite
 	a.router.HandleFunc(Path, HandledFunc)
 }
 
-func (a *AppServer) Stop() {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
+func (a *AppServer) Stop(ctx context.Context) {
 	a.server.Shutdown(ctx)
 }

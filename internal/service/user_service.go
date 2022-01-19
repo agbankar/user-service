@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"mocking-goway/internal/dao"
-	"mocking-goway/internal/model"
+	"user-service/internal/dao"
+	"user-service/internal/model"
 )
 
 type UserService interface {

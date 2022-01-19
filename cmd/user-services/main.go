@@ -1,16 +1,19 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"mocking-goway/cmd/webservices/controllers"
-	"mocking-goway/internal/appserver"
-	"mocking-goway/internal/config"
-	"mocking-goway/internal/dao"
-	"mocking-goway/internal/paths"
-	"mocking-goway/internal/service"
+	"user-service/cmd/user-services/controllers"
+	"user-service/internal/appserver"
+	"user-service/internal/config"
+	"user-service/internal/dao"
+	"user-service/internal/paths"
+	"user-service/internal/service"
+
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func main() {
@@ -23,8 +26,9 @@ func main() {
 	server := appserver.NewAppServer(c)
 	server.AddGetApi(paths.GetBonus, userController.GetBonus)
 	go server.Start()
-
-	//go appserver.Start()
 	<-sigs
-	fmt.Println("Done")
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	server.Stop(ctx)
+	defer cancel()
+	fmt.Println("Exiting from main")
 }

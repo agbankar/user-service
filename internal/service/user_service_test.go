@@ -2,9 +2,10 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"gopkg.in/go-playground/assert.v1"
-	"mocking-goway/internal/model"
 	"testing"
+	"user-service/internal/model"
 )
 
 var user model.User
@@ -38,6 +39,7 @@ func TestBonusA(t *testing.T) {
 	service := NewUserService(mockA)
 	bonusA, _ := service.CalculateBonus(&user)
 	assert.IsEqual(100, bonusA)
+	fmt.Println(bonusA)
 
 }
 
@@ -48,6 +50,7 @@ func TestBonusB(t *testing.T) {
 	}
 	service := NewUserService(mockB)
 	bonusB, _ := service.CalculateBonus(&user)
+	fmt.Println(bonusB)
 	assert.IsEqual(75, bonusB)
 
 }
@@ -59,6 +62,8 @@ func TestBonusC(t *testing.T) {
 	}
 	service := NewUserService(mockC)
 	bonusC, _ := service.CalculateBonus(&user)
+	fmt.Println(bonusC)
+
 	assert.IsEqual(50, bonusC)
 
 }
@@ -69,6 +74,8 @@ func TestBonusD(t *testing.T) {
 	}
 	service := NewUserService(mockD)
 	bonusD, _ := service.CalculateBonus(&user)
+	fmt.Println(bonusD)
+
 	assert.IsEqual(0, bonusD)
 
 }
@@ -79,6 +86,8 @@ func TestBonusInvalid(t *testing.T) {
 	}
 	service := NewUserService(mockInvalid)
 	bonusD, _ := service.CalculateBonus(&user)
+	fmt.Println(bonusD)
+
 	assert.IsEqual(-1, bonusD)
 
 }
@@ -89,6 +98,7 @@ func TestBonusError(t *testing.T) {
 	}
 	service := NewUserService(mockError)
 	errorBonus, _ := service.CalculateBonus(&user)
+	fmt.Println(errorBonus)
 	assert.IsEqual(-1, errorBonus)
 
 }
