@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"encoding/json"
 	"github.com/gorilla/mux"
 	"net/http"
 	"user-service/internal/model"
 	"user-service/internal/service"
+	"user-service/respond"
 )
 
 type UserController struct {
@@ -25,8 +25,5 @@ func (u *UserController) GetBonus(w http.ResponseWriter, r *http.Request) {
 		UserID: userId,
 		Bonus:  bonus,
 	}
-
-	json.NewEncoder(w).Encode(userBonus)
-	w.WriteHeader(http.StatusOK)
-
+	respond.With(w, r, http.StatusOK, userBonus)
 }
