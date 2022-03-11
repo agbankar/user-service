@@ -38,6 +38,9 @@ func (a *AppServer) Start() {
 func (a *AppServer) AddGetApi(Path string, HandledFunc func(w http.ResponseWriter, r *http.Request)) {
 	a.router.HandleFunc(Path, HandledFunc)
 }
+func (a *AppServer) AddPostApi(Path string, HandledFunc func(w http.ResponseWriter, r *http.Request)) {
+	a.router.HandleFunc(Path, HandledFunc)
+}
 
 func (a *AppServer) Stop(ctx context.Context) {
 	a.server.Shutdown(ctx)

@@ -16,11 +16,12 @@ func NewUserDao() UserDao {
 	return &UserDaoImpl{}
 
 }
-func (U *UserDaoImpl) GetRating(UserId string) (string, error) {
+func (d *UserDaoImpl) GetRating(UserId string) (string, error) {
 	fmt.Println("Inside Dao", UserId)
 	return "A", nil
 }
 func (d *UserDaoImpl) CreateUser(user *model.User) error {
+	fmt.Println("inserting user in db")
 	return nil
 
 }
