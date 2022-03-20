@@ -35,7 +35,7 @@ func (u *UserController) GetBonus(w http.ResponseWriter, r *http.Request) {
 
 func (u *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 	user := &model.User{}
-	u.AppValidations.ApplyStaticValidations(w, r, user, true)
+	u.AppValidations.ApplyStaticValidations(w, r, user)
 	u.UserService.CreateUser(user)
 	respond.With(w, r, http.StatusOK, user)
 }

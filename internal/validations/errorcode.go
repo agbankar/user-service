@@ -55,5 +55,6 @@ func NewRegexpCode(code string, description string, pattern string) RegexpErrorC
 }
 
 var (
-	CODE101 = NewRegexpCode("CODE101", "UserID  is required. AlphaNumeric Max 50 characters.", "^.{1,50}$")
+	CODE101 = NewRegexpCode("CODE101", "Name  is required. AlphaNumeric Max 50 characters.", "^[ a-zA-Z0-9]{1,50}$")
+	CODE102 = NewRegexpCode("CODE102", "Id  is required. Numeric only Max 50 characters.", "^[0-9]{1,3}$")
 )

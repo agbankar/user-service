@@ -3,17 +3,19 @@ package validations
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"github.com/go-playground/validator/v10"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"reflect"
 	"user-service/internal/app_errors"
 	"user-service/respond"
 )
 
 type AppValidator interface {
-	ApplyStaticValidations(w http.ResponseWriter, r *http.Request, requestDto interface{}, validateReq bool) bool
-	//This should be abstract , its the responsibility of the caller to pass the business validation function
-	//TODO: Implement inheritance
+	ApplyStaticValidations(w http.ResponseWriter, r *http.Request, requestDto interface{}) ([]app_errors.AppError, error)
 	ApplyBusinessValidations(handlFunc func(requestDto interface{}) []app_errors.AppError) bool
 }
 
@@ -26,7 +28,7 @@ func NewValidationService() *AppValidations {
 
 }
 
-func (a *AppValidations) ApplyStaticValidations(w http.ResponseWriter, r *http.Request, requestDto interface{}, validateReq bool) bool {
+func (a *AppValidations) ApplyStaticValidations(w http.ResponseWriter, r *http.Request, requestDto interface{}) ([]app_errors.AppError, error) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		respond.With(w, r, http.StatusBadRequest, nil)
@@ -39,17 +41,39 @@ func (a *AppValidations) ApplyStaticValidations(w http.ResponseWriter, r *http.R
 	err = json.Unmarshal(body, requestDto)
 	if err != nil {
 		respond.With(w, r, http.StatusBadRequest, nil)
-		return false
+		return nil, nil
 	}
 	// validate request
-	if validateReq {
-		err = v.Struct(requestDto)
-		if err != nil {
-			respond.With(w, r, http.StatusBadRequest, nil)
-			return false
+	err = V.Struct(requestDto)
+	if err != nil {
+		validationErrors, ok := err.(validator.ValidationErrors)
+		if !ok {
+			log.Println("JSONResponseFromValidation - expecting err to be validator.ValidationErrors, found",
+				reflect.TypeOf(err).Name(), ". Value:", err.Error())
+			return nil, nil
+		}
+
+		for _, err := range validationErrors {
+			code := err.Param()
+			rule := LookupValidationRule(code)
+			for _, err := range validationErrors {
+				code := err.Param()
+				if rule == nil {
+					log.Printf("ValidationRule not found for code: '%s'\n", code)
+				} else {
+					element := app_errors.AppError{
+						ErrorCode:        rule.Code(),
+						ErrorDescription: rule.Description(),
+					}
+					fmt.Println(element)
+					//TODO: respond.WithValidationErrors()
+				}
+			}
 		}
 	}
-	return true
+	//respond.WithValidationErrors(w, r, http.StatusBadRequest, err)
+
+	return nil, nil
 }
 func (a *AppValidations) ApplyBusinessValidations(handlFunc func(requestDto interface{}) []app_errors.AppError) bool {
 	return true
