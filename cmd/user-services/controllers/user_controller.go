@@ -30,12 +30,14 @@ func (u *UserController) GetBonus(w http.ResponseWriter, r *http.Request) {
 		Bonus:  bonus,
 	}
 	fmt.Println("UserController::GetBonus ", userId)
-	respond.With(w, r, http.StatusOK, userBonus)
+	respond.With(w, http.StatusOK, userBonus)
 }
 
 func (u *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 	user := &model.User{}
-	u.AppValidations.ApplyStaticValidations(w, r, user)
+	if !u.AppValidations.ApplyStaticValidations(w, r, user) {
+		return
+	}
 	u.UserService.CreateUser(user)
-	respond.With(w, r, http.StatusOK, user)
+	respond.With(w, http.StatusOK, user)
 }
