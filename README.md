@@ -1,6 +1,6 @@
 
 ## User-service
-This is sample go rest apis without database , main purpose is how to build rest apis with go 
+This is sample go rest apis without database, main purpose is how to build rest apis with go 
 and architect the project to create server serving apis and handle validations and error. 
 This sample also demonstrates how are junit tests are done in golang .
 
