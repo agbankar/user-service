@@ -35,6 +35,7 @@ func main() {
 	server := appserver.NewAppServer(c)
 	server.AddGetApi(paths.GetBonus, userController.GetBonus)
 	server.AddPostApi(paths.CreateUser, userController.CreateUser)
+	server.AddGetApi(paths.GetUserOrders, userController.GetUserOrders)
 	go server.Start()
 	<-sigs
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

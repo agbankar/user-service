@@ -90,11 +90,18 @@ curl --location --request GET 'http://localhost:8080/getBonus/1'
   CREATE TABLE users (
   id bigint(20) NOT NULL,
   last_name varchar(255) ,
-  first_name  varchar(255),
+  first_name varchar(255),
   address varchar(255),
   city varchar(255),
   PRIMARY KEY (`id`)
 ) ;
+
+CREATE TABLE orders (
+  id bigint(20) NOT NULL,
+  order_id int(20),
+  PRIMARY KEY (`id`)
+) ;
+
   ```
 
 #### Next Steps

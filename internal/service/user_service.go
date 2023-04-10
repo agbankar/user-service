@@ -9,6 +9,7 @@ import (
 type UserService interface {
 	CalculateBonus(string) (float32, error)
 	CreateUser(*model.User) error
+	GetUserOrders(UserId int) (model.User, error)
 }
 type UserServiceImpl struct {
 	UserDao dao.UserDao
@@ -40,4 +41,8 @@ func (s *UserServiceImpl) CalculateBonus(UserId string) (float32, error) {
 // CreateUser TODO: Not implemented
 func (s *UserServiceImpl) CreateUser(user *model.User) error {
 	return s.UserDao.CreateUser(user)
+}
+
+func (s *UserServiceImpl) GetUserOrders(UserId int) (model.User, error) {
+	return s.UserDao.GetUserOrders(UserId)
 }

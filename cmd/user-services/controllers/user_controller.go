@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
+	"strconv"
 	"user-service/internal/app_errors"
 	"user-service/internal/model"
 	"user-service/internal/service"
@@ -47,6 +48,17 @@ func (u *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 			MoreInfo:         "",
 		})
 	}
+	respond.With(w, http.StatusOK, user)
+
+}
+
+func (u *UserController) GetUserOrders(w http.ResponseWriter, r *http.Request) {
+	userId, err := strconv.Atoi(mux.Vars(r)["userId"])
+	if err != nil {
+		fmt.Println("")
+		respond.WithAppError(w, "Something went wrong")
+	}
+	user, _ := u.UserService.GetUserOrders(userId)
 	respond.With(w, http.StatusOK, user)
 
 }

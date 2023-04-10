@@ -9,6 +9,7 @@ import (
 type UserDao interface {
 	GetRating(string) (string, error)
 	CreateUser(*model.User) error
+	GetUserOrders(UserId int) (model.User, error)
 }
 type UserDaoImpl struct {
 	Db *gorm.DB
@@ -27,4 +28,10 @@ func (d *UserDaoImpl) CreateUser(user *model.User) error {
 	tx := d.Db.Create(&user)
 	return tx.Error
 
+}
+
+func (d *UserDaoImpl) GetUserOrders(UserId int) (model.User, error) {
+	user := model.User{}
+	d.Db.First(&user, 1)
+	return user, nil
 }
