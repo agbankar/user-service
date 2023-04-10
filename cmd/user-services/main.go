@@ -8,10 +8,12 @@ import (
 	"user-service/internal/appserver"
 	"user-service/internal/config"
 	"user-service/internal/dao"
+	"user-service/internal/dao/db"
 	"user-service/internal/paths"
 	"user-service/internal/service"
 	"user-service/internal/validations"
 
+	_ "github.com/go-sql-driver/mysql"
 	"os"
 	"os/signal"
 	"syscall"
@@ -19,11 +21,16 @@ import (
 )
 
 func main() {
+
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	c := getConf()
+	db, err := db.NewMysqlClient(c)
+	if err != nil {
+		panic(err.Error())
+	}
 	validationService := validations.NewValidationService()
-	userService := service.NewUserService(dao.NewUserDao())
+	userService := service.NewUserService(dao.NewUserDao(db))
 	userController := controllers.NewUserController(userService, validationService)
 	server := appserver.NewAppServer(c)
 	server.AddGetApi(paths.GetBonus, userController.GetBonus)

@@ -29,10 +29,8 @@ func init() {
 }
 
 func ValidateErrorCode(f validator.FieldLevel) bool {
-	fmt.Println("Inside validations")
 	code := f.Param()
 	fmt.Println()
-	fmt.Println(code)
 	rule, ok := validationRuleMap[code]
 	if r, ok := rule.(RegexpRule); ok {
 		var value string

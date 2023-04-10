@@ -1,7 +1,15 @@
-Port: 8080
-DbUrl:
-DbUserName: root
-DbPawssword: test
-DbName: work
-DbDialect: mysql
-DbPort: 3306
+
+Server:
+ Port: 8080
+
+Db:
+  Password: test
+  Url: 127.0.0.1
+  UserName: root
+  Name: testdb
+  Dialect: mysql
+  Port: 3306
+  Driver: mysql
+  LogLevel: 3
+
+# 	db, err := sql.Open("mysql", "root:test@tcp(127.0.0.1:3306)/testdb")

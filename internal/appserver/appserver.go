@@ -27,7 +27,7 @@ func NewAppServer(config *config.Config) *AppServer {
 }
 func (a *AppServer) Start() {
 	a.server = &http.Server{
-		Addr:    ":" + a.config.Port,
+		Addr:    ":" + a.config.Server.Port,
 		Handler: a.router,
 	}
 	if err := a.server.ListenAndServe(); err != nil {

@@ -39,6 +39,5 @@ func (s *UserServiceImpl) CalculateBonus(UserId string) (float32, error) {
 
 // CreateUser TODO: Not implemented
 func (s *UserServiceImpl) CreateUser(user *model.User) error {
-	return nil
-
+	return s.UserDao.CreateUser(user)
 }

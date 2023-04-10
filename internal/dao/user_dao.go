@@ -2,6 +2,7 @@ package dao
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"user-service/internal/model"
 )
 
@@ -10,10 +11,11 @@ type UserDao interface {
 	CreateUser(*model.User) error
 }
 type UserDaoImpl struct {
+	Db *gorm.DB
 }
 
-func NewUserDao() UserDao {
-	return &UserDaoImpl{}
+func NewUserDao(Db *gorm.DB) UserDao {
+	return &UserDaoImpl{Db: Db}
 
 }
 func (d *UserDaoImpl) GetRating(UserId string) (string, error) {
@@ -21,7 +23,8 @@ func (d *UserDaoImpl) GetRating(UserId string) (string, error) {
 	return "A", nil
 }
 func (d *UserDaoImpl) CreateUser(user *model.User) error {
-	fmt.Println("inserting user in db")
-	return nil
+	fmt.Println("inserting user in db", user)
+	tx := d.Db.Create(&user)
+	return tx.Error
 
 }

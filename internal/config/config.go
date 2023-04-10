@@ -1,36 +1,44 @@
 package config
 
-/*
-Port: 8080
-DbUrl:
-DbUserName: root
-DbPawssword: test
-DbName: work
-DbDialect: mysql
-DbPort: 3306
-
-*/
 type Config struct {
-	Port       string `yaml:"Port"`
-	DbUserName string `yaml:"DbUserName"`
-	DbPassword string `yaml:"DbPassword"`
-	DbUrl      string `yaml:"DbUrl"`
-	DbPort     string `yaml:"DbPort"`
+	Server Server
+	Db     Db
+}
+type Db struct {
+	Password string
+	UserName string
+	Url      string
+	Port     string
+	Driver   string
+	Name     string
+	LogLevel int
+}
+type Server struct {
+	Port string
 }
 
 func (c *Config) getPort() string {
-	return c.Port
+	return c.Server.Port
 }
 func (c *Config) getDbUserName() string {
-	return c.DbUserName
+	return c.Db.UserName
 }
 func (c *Config) getDbPassword() string {
-	return c.DbPassword
+	return c.Db.Password
 }
 func (c *Config) getDbUrl() string {
-	return c.DbUrl
+	return c.Db.Url
 }
 
 func (c *Config) getDbPort() string {
-	return c.DbPort
+	return c.Db.Port
+}
+func (c *Config) getDriver() string {
+	return c.Db.Driver
+}
+func (c *Config) getName() string {
+	return c.Db.Name
+}
+func (c *Config) geLogLevel() int {
+	return c.Db.LogLevel
 }

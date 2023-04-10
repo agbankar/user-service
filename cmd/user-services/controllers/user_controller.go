@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
+	"user-service/internal/app_errors"
 	"user-service/internal/model"
 	"user-service/internal/service"
 	"user-service/internal/validations"
@@ -38,6 +39,14 @@ func (u *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 	if !u.AppValidations.ApplyStaticValidations(w, r, user) {
 		return
 	}
-	u.UserService.CreateUser(user)
+	err := u.UserService.CreateUser(user)
+	if err != nil {
+		respond.WithErrors(w, http.StatusBadRequest, app_errors.AppError{
+			ErrorCode:        "NA",
+			ErrorDescription: err.Error(),
+			MoreInfo:         "",
+		})
+	}
 	respond.With(w, http.StatusOK, user)
+
 }

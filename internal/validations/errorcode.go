@@ -17,17 +17,17 @@ type errorCode struct {
 	httpStatus  int
 }
 
-//Code function
+// Code function
 func (e errorCode) Code() string {
 	return e.code
 }
 
-//Description function
+// Description function
 func (e errorCode) Description() string {
 	return e.description
 }
 
-//HTTPStatus function
+// HTTPStatus function
 func (e errorCode) HTTPStatus() int {
 	return e.httpStatus
 }
@@ -56,5 +56,5 @@ func NewRegexpCode(code string, description string, pattern string) RegexpErrorC
 
 var (
 	CODE101 = NewRegexpCode("CODE101", "Name  is required. AlphaNumeric Max 50 characters.", "^[ a-zA-Z0-9]{1,50}$")
-	CODE102 = NewRegexpCode("CODE102", "Id  is required. Numeric only Max 3 characters.", "^[0-9]{1,3}$")
+	CODE102 = NewRegexpCode("CODE102", "Id  is required. Numeric only Max 10 characters.", "^[0-9]{1,10}$")
 )

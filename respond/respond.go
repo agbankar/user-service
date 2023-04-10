@@ -19,10 +19,10 @@ func WithValidationErrors(w http.ResponseWriter, httpStatus int, Errors []app_er
 	json.NewEncoder(w).Encode(Errors)
 }
 
-func WithErrors(w http.ResponseWriter, httpStatus int, Error string) {
+func WithErrors(w http.ResponseWriter, httpStatus int, AppError app_errors.AppError) {
 	w.Header().Add("Content-Type", "application/json;charset=UTF-8")
 	w.WriteHeader(httpStatus)
-	json.NewEncoder(w).Encode(Error)
+	json.NewEncoder(w).Encode(AppError)
 }
 
 func WithAppError(w http.ResponseWriter, Errors string) {
