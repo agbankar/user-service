@@ -1,21 +1,24 @@
 ## User-service
 
-This is sample go rest apis without database, main purpose is how to build rest apis with go
+This is sample go rest apis database, main purpose is how to build rest apis with go
 and architect the project to create server serving apis and handle validations and error.
 This sample also demonstrates how are junit tests are done in golang .
 
 ##### System Requirement:
 
-Go should be installed on your local machine or docker container of the golang
-
-#### How to run
+* Go should be installed on your local machine
+* pull the mysql docker image and run the mysql container
+ ````
+docker run --name goapis-mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql
+````
+#### How to run the app
 
 Clone this project git@github.com:agbankar/user-service.git on your local at any location
 c:/users/{yourid}/ and cd c:/users/{yourid}/user-service . Run g**o build ./...** build should be ready.
 once build is ready run **go run ./cmd/main.go**
 server will be up and running on your local at http://localhost:8080/
 
-Below are some of the APIS
+#### APIs
 
 #### 1.CreateUser --> success
 

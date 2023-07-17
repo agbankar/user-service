@@ -3,10 +3,10 @@ Server:
  Port: 8080
 
 Db:
-  Password: test
+  Password: root
   Url: 127.0.0.1
   UserName: root
-  Name: testdb
+  Name: userdb
   Dialect: mysql
   Port: 3306
   Driver: mysql
