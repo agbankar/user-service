@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"user-service/internal/config"
+	"user-service/internal/model"
 )
 
 func NewMysqlClient(Config *config.Config) (db *gorm.DB, err error) {
@@ -18,6 +19,13 @@ func NewMysqlClient(Config *config.Config) (db *gorm.DB, err error) {
 		fmt.Println(db)
 		return nil, err
 	}
+	initDB(db)
 	return db, err
+
+}
+
+// Initialize database
+func initDB(db *gorm.DB) {
+	db.AutoMigrate(model.User{})
 
 }

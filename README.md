@@ -8,9 +8,31 @@ This sample also demonstrates how are junit tests are done in golang .
 
 * Go should be installed on your local machine
 * pull the mysql docker image and run the mysql container
+
  ````
 docker run --name goapis-mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql
 ````
+
+Run the below DDL
+
+  ```
+  CREATE TABLE users (
+  id bigint(20) NOT NULL,
+  last_name varchar(255) ,
+  first_name varchar(255),
+  address varchar(255),
+  city varchar(255),
+  PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE orders (
+  id bigint(20) NOT NULL,
+  order_id int(20),
+  PRIMARY KEY (`id`)
+) ;
+
+  ```
+
 #### How to run the app
 
 Clone this project git@github.com:agbankar/user-service.git on your local at any location
@@ -86,26 +108,6 @@ curl --location --request GET 'http://localhost:8080/getBonus/1'
   "bonus": 100
 }
 ```
-
-#### DB Scripts
-
-  ```
-  CREATE TABLE users (
-  id bigint(20) NOT NULL,
-  last_name varchar(255) ,
-  first_name varchar(255),
-  address varchar(255),
-  city varchar(255),
-  PRIMARY KEY (`id`)
-) ;
-
-CREATE TABLE orders (
-  id bigint(20) NOT NULL,
-  order_id int(20),
-  PRIMARY KEY (`id`)
-) ;
-
-  ```
 
 #### Next Steps
 

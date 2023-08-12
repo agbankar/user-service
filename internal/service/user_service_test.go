@@ -21,6 +21,12 @@ type userDaoMock struct {
 	handlFunc func(UserID string) (string, error)
 }
 
+func (daoMcok *userDaoMock) GetUserOrders(UserId int) (model.User, error) {
+	return model.User{}, nil
+
+	//TODO implement me
+}
+
 func (daoMcok *userDaoMock) GetRating(UserID string) (string, error) {
 	return daoMcok.handlFunc(UserID)
 }
